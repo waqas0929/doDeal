@@ -30,55 +30,24 @@ const Services = () => {
     "Social Media",
   ];
 
-  // Fixed position slots around the circle (these positions never change)
-  const positionSlots = [
-    { top: "-12%", right: "-16%", left: "auto" }, // Slot 0: Top
-    { top: "14%", right: "0%", left: "auto" }, // Slot 1: Top-right
-    { top: "52%", left: "15%", right: "auto" }, // Slot 2: Left
-    { top: "80%", right: "0%", left: "auto" }, // Slot 3: Bottom-right
-    { top: "100%", right: "-16%", left: "auto" }, // Slot 4: Bottom
-  ];
+  // Fixed positions for each service around the circle (never change)
+  const servicePositions = {
+    "SEO & SEM": { top: "-12%", right: "-16%" },
+    "Paid Campaigns": { top: "14%", right: "0%" },
+    "Branding Services": { top: "52%", left: "15%" },
+    "Digital Marketing": { top: "80%", right: "0%" },
+    "Social Media": { top: "100%", right: "-16%" },
+  };
 
-  // Default order of services (their home positions)
-  const defaultServiceOrder = [
-    "SEO & SEM", // Slot 0
-    "Paid Campaigns", // Slot 1
-    "Branding Services", // Slot 2
-    "Digital Marketing", // Slot 3
-    "Social Media", // Slot 4
-  ];
-
-  // Get shuffled position for a service based on selected service
+  // Get position for a service (returns null if selected)
   const getServicePosition = (serviceName, selectedServiceName) => {
     // If this service is selected, don't show it (it's in the button)
     if (serviceName === selectedServiceName) {
       return null;
     }
 
-    // Find index of selected service in default order
-    const selectedIndex = defaultServiceOrder.indexOf(selectedServiceName);
-    // Find index of current service in default order
-    const currentServiceIndex = defaultServiceOrder.indexOf(serviceName);
-
-    // Calculate new position: services shift to fill the gap
-    // Services before the selected one keep their position
-    // Services after shift forward by one position
-    let newSlotIndex;
-    if (currentServiceIndex < selectedIndex) {
-      // Keep same slot
-      newSlotIndex = currentServiceIndex;
-    } else {
-      // Shift forward by one (since selected service is removed from circle)
-      newSlotIndex = currentServiceIndex - 1;
-    }
-
-    // Ensure index is within bounds
-    newSlotIndex = Math.max(
-      0,
-      Math.min(newSlotIndex, positionSlots.length - 1)
-    );
-
-    return positionSlots[newSlotIndex];
+    // Return the fixed position for this service
+    return servicePositions[serviceName] || null;
   };
 
   // All services with their icons
@@ -443,18 +412,14 @@ const Services = () => {
                 );
                 if (!position) return null;
 
-                // Explicitly set positioning properties with proper left/right handling
+                // Explicitly set positioning properties
                 const style = {
                   position: "absolute",
                   zIndex: 10,
                   top: position.top || "auto",
                   bottom: position.bottom || "auto",
-                  ...(position.left && position.left !== "auto"
-                    ? { left: position.left, right: "auto" }
-                    : {}),
-                  ...(position.right && position.right !== "auto"
-                    ? { right: position.right, left: "auto" }
-                    : {}),
+                  left: position.left || "auto",
+                  right: position.right || "auto",
                   opacity: 1,
                 };
 
