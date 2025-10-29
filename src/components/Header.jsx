@@ -60,12 +60,26 @@ const Header = () => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-[120px] py-4 sm:py-6 md:py-[34px]">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <img
               src={logo}
               alt="DoDeal Logo"
               className="h-8 sm:h-10 md:h-auto w-auto object-contain"
             />
+            <span
+              className="text-xl sm:text-2xl md:text-3xl font-bold"
+              style={{
+                background:
+                  "linear-gradient(135deg, #00FF9E 0%, #00D885 25%, #00AE6B 50%, #00FF9E 75%, #00FF9E 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                textShadow: "0 0 20px rgba(0, 255, 158, 0.3)",
+                filter: "drop-shadow(0 0 8px rgba(0, 255, 158, 0.5))",
+              }}
+            >
+              DoDeal
+            </span>
           </div>
 
           {/* Desktop Navigation - Pill-shaped container */}
