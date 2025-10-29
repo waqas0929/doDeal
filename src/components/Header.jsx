@@ -121,9 +121,7 @@ const Header = () => {
                 animation: "heartbeat 3s ease-in-out infinite",
                 display: "inline-block",
               }}
-            >
-              DoDeal
-            </span>
+            ></span>
           </div>
 
           {/* Desktop Navigation - Pill-shaped container */}
