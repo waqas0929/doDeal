@@ -334,3 +334,151 @@ body {
   box-shadow: 0 0 8px rgba(0, 255, 158, 1), 0 0 16px rgba(0, 255, 158, 0.7),
     0 0 24px rgba(0, 255, 158, 0.4);
 }
+
+/* Service Transition Animations */
+@keyframes moveToCenter {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes moveFromCenter {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.service-enter-center {
+  animation: moveToCenter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.service-exit-to-position {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-item-transitioning {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.service-item-exiting {
+  z-index: 15;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-item-entering {
+  z-index: 12;
+  animation: serviceSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes serviceSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.service-button-content-enter {
+  animation: serviceFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes serviceFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Service animating from position to center button */
+.service-animate-to-center {
+  animation: moveToCenterButton 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes moveToCenterButton {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+/* Service animating from center button to position */
+.service-animate-from-center {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Service Details Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.service-details-enter {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.service-title-enter {
+  animation: fadeInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s backwards;
+}
+
+.service-subtitle-enter {
+  animation: fadeInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+}
+
+.service-description-enter {
+  animation: fadeInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s backwards;
+}
+
+.service-button-enter {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s backwards;
+}
