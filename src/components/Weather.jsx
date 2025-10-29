@@ -285,10 +285,56 @@ const Weather = () => {
         { day: "Wed", icon: rainyIcon, condition: "Rainy", temp: "32/20" },
       ];
 
+  // Check if it's currently raining
+  const isRaining = weatherData
+    ? (() => {
+        const condition = weatherData.current.weather[0].main.toLowerCase();
+        const hasRainCondition =
+          condition.includes("rain") ||
+          condition.includes("drizzle") ||
+          condition.includes("thunderstorm");
+        const hasRainData =
+          weatherData.current.rain && weatherData.current.rain["1h"] > 0;
+        return hasRainCondition || hasRainData;
+      })()
+    : false;
+
+  // Generate rain drops for animation
+  const generateRainDrops = () => {
+    const drops = [];
+    const dropCount = isRaining ? 100 : 0;
+
+    for (let i = 0; i < dropCount; i++) {
+      const left = Math.random() * 100; // Random horizontal position
+      const delay = Math.random() * 2; // Random delay for natural effect
+      const duration = 0.8 + Math.random() * 0.4; // Random speed between 0.8-1.2s
+      const intensity = Math.random();
+
+      let className = "rain-drop";
+      if (intensity > 0.7) {
+        className += " heavy";
+      } else if (intensity < 0.3) {
+        className += " light";
+      }
+
+      drops.push({
+        id: i,
+        left: `${left}%`,
+        delay: `${delay}s`,
+        duration: `${duration}s`,
+        className: className,
+      });
+    }
+
+    return drops;
+  };
+
+  const rainDrops = generateRainDrops();
+
   return (
     <section
       id="weather"
-      className="py-20 md:py-32 px-4 relative"
+      className="py-20 md:py-32 px-4 relative overflow-hidden"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -296,6 +342,22 @@ const Weather = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {/* Rain Animation Overlay */}
+      {isRaining && (
+        <div className="rain-overlay">
+          {rainDrops.map((drop) => (
+            <div
+              key={drop.id}
+              className={drop.className}
+              style={{
+                left: drop.left,
+                animationDelay: drop.delay,
+                animationDuration: drop.duration,
+              }}
+            />
+          ))}
+        </div>
+      )}
       <div className="container mx-auto max-w-7xl">
         {/* Section Title */}
         <div className="text-center mb-12 md:mb-16">
