@@ -1,6 +1,38 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import logo from "../assets/DoDealLogo.png";
-import getInTouchGif from "../assets/GetInTouch.gif";
+
+// Particle Animation Component
+const ParticleAnimation = ({ className = "", style = {} }) => {
+  const particles = useMemo(() => {
+    return Array.from({ length: 80 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      size: ["small", "medium", "large", "x-large"][
+        Math.floor(Math.random() * 4)
+      ],
+      delay: Math.random() * 4,
+      duration: 3 + Math.random() * 3,
+    }));
+  }, []);
+
+  return (
+    <div className={`particle-animation-container ${className}`} style={style}>
+      {particles.map((particle) => (
+        <div
+          key={particle.id}
+          className={`animated-particle ${particle.size}`}
+          style={{
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
+            animationDelay: `${particle.delay}s`,
+            animationDuration: `${particle.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("Home");
@@ -92,27 +124,23 @@ const Header = () => {
           {/* CTA Button - Only show on desktop */}
           <div
             className="hidden lg:block relative"
-            style={{ width: "182px", height: "53px" }}
+            style={{ width: "182px", height: "53px", zIndex: 1 }}
           >
-            {/* GIF Background - Behind button (outside, larger area) */}
-            <div
-              className="absolute rounded-full overflow-hidden"
+            {/* Animated Particle Background - Behind button */}
+            <ParticleAnimation
+              className="absolute rounded-full overflow-visible"
               style={{
                 width: "250px",
                 height: "150px",
                 left: "50%",
                 top: "50%",
                 transform: "translate(-50%, -50%)",
-                backgroundImage: `url(${getInTouchGif})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                zIndex: 0,
+                zIndex: -1,
               }}
             />
-            {/* Button with styles - On top of GIF */}
+            {/* Button with styles - On top of particles */}
             <button
-              className="absolute inset-0 text-white rounded-full transition-colors get-in-touch-btn flex items-center justify-center"
+              className="absolute inset-0 text-white rounded-full transition-colors get-in-touch-btn flex items-center justify-center relative"
               style={{
                 width: "182px",
                 height: "53px",
@@ -157,10 +185,13 @@ const Header = () => {
                 {link}
               </a>
             ))}
-            <div className="relative w-full mt-4" style={{ height: "53px" }}>
-              {/* GIF Background - Behind button (outside, larger area) */}
-              <div
-                className="absolute rounded-full overflow-hidden"
+            <div
+              className="relative w-full mt-4"
+              style={{ height: "53px", zIndex: 1 }}
+            >
+              {/* Animated Particle Background - Behind button */}
+              <ParticleAnimation
+                className="absolute rounded-full overflow-visible"
                 style={{
                   width: "100%",
                   minWidth: "250px",
@@ -168,16 +199,12 @@ const Header = () => {
                   left: "50%",
                   top: "50%",
                   transform: "translate(-50%, -50%)",
-                  backgroundImage: `url(${getInTouchGif})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  zIndex: 0,
+                  zIndex: -1,
                 }}
               />
-              {/* Button - On top of GIF */}
+              {/* Button - On top of particles */}
               <button
-                className="absolute inset-0 w-full text-white rounded-full flex items-center justify-center"
+                className="absolute inset-0 w-full text-white rounded-full flex items-center justify-center relative"
                 style={{
                   height: "53px",
                   padding: "20px 36px",

@@ -9,8 +9,40 @@ import {
 // Import videos - update these paths when you add the second video
 import borderVideo from "../assets/HeaderSectionVideo.mp4"; // Video for rounded border
 import backgroundImage from "../assets/Background.png";
-import getInTouchGif from "../assets/GetInTouch.gif";
 // import doDealVideo from "../assets/HeaderSectionVideo.mp4"; // Video for DO DEAL text (temporary - replace with actual DO DEAL video)
+
+// Particle Animation Component
+const ParticleAnimation = ({ className = "", style = {} }) => {
+  const particles = useMemo(() => {
+    return Array.from({ length: 80 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      size: ["small", "medium", "large", "x-large"][
+        Math.floor(Math.random() * 4)
+      ],
+      delay: Math.random() * 4,
+      duration: 3 + Math.random() * 3,
+    }));
+  }, []);
+
+  return (
+    <div className={`particle-animation-container ${className}`} style={style}>
+      {particles.map((particle) => (
+        <div
+          key={particle.id}
+          className={`animated-particle ${particle.size}`}
+          style={{
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
+            animationDelay: `${particle.delay}s`,
+            animationDuration: `${particle.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Hero = () => {
   const socialMedia = [
@@ -161,43 +193,37 @@ const Hero = () => {
             className="relative cta-button-wrapper group"
             style={{ width: "fit-content" }}
             onMouseEnter={(e) => {
-              const gifElement = e.currentTarget.querySelector(
+              const particleElement = e.currentTarget.querySelector(
                 ".cta-gif-background"
               );
-              if (gifElement) gifElement.style.opacity = "1";
+              if (particleElement) particleElement.style.opacity = "1";
             }}
             onMouseLeave={(e) => {
-              const gifElement = e.currentTarget.querySelector(
+              const particleElement = e.currentTarget.querySelector(
                 ".cta-gif-background"
               );
-              if (gifElement) gifElement.style.opacity = "0";
+              if (particleElement) particleElement.style.opacity = "0";
             }}
           >
-            {/* GIF Background - Behind button on hover */}
-            <div
-              className="cta-gif-background absolute rounded-full overflow-hidden transition-opacity duration-300"
+            {/* Animated Particle Background - Behind button on hover */}
+            <ParticleAnimation
+              className="cta-gif-background transition-opacity duration-300"
               style={{
                 width: "100%",
                 minWidth: "250px",
                 height: "150px",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                backgroundImage: `url(${getInTouchGif})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                zIndex: 0,
                 opacity: 0,
+                zIndex: 0,
               }}
             />
             {/* Button */}
             <button
-              className="cta-connect-button border-2 border-primary-green text-white px-6 py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-full font-medium text-sm sm:text-base md:text-lg transition-all relative z-10"
+              className="cta-connect-button border-2 border-primary-green text-white px-6 py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-full font-medium text-sm sm:text-base md:text-lg transition-all relative"
               style={{
                 backgroundColor: "rgba(0, 174, 107, 0.2)",
                 backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
+                // WebkitBackdropFilter: "blur(10px)",
+                zIndex: 50,
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = "rgba(0, 174, 107, 0.85)";
