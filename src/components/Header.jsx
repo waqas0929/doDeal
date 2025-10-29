@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import logo from "../assets/DoDealLogo.png";
 
 // Particle Animation Component
@@ -37,6 +37,46 @@ const ParticleAnimation = ({ className = "", style = {} }) => {
 const Header = () => {
   const [activeLink, setActiveLink] = useState("Home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState(120);
+
+  // Calculate header height
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      const header = document.querySelector("header");
+      if (header) {
+        setHeaderHeight(header.offsetHeight);
+      }
+    };
+
+    updateHeaderHeight();
+    window.addEventListener("resize", updateHeaderHeight);
+    return () => window.removeEventListener("resize", updateHeaderHeight);
+  }, []);
+
+  // Handle scroll to show/hide header
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Show header at top of page
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+      }
+      // Hide when scrolling down, show when scrolling up
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const navLinks = [
     "Home",
@@ -49,7 +89,9 @@ const Header = () => {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50"
+      className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-50 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
       style={{
         background:
           "linear-gradient(180deg, rgba(217, 217, 217, 0.04) 0%, rgba(115, 115, 115, 0.04) 100%)",
@@ -147,7 +189,7 @@ const Header = () => {
               className="absolute rounded-full overflow-visible"
               style={{
                 width: "250px",
-                height: "150px",
+                height: "100px",
                 left: "50%",
                 top: "50%",
                 transform: "translate(-50%, -50%)",
@@ -211,7 +253,7 @@ const Header = () => {
                 style={{
                   width: "100%",
                   minWidth: "250px",
-                  height: "150px",
+                  height: "100px",
                   left: "50%",
                   top: "50%",
                   transform: "translate(-50%, -50%)",
