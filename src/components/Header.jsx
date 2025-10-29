@@ -76,6 +76,8 @@ const Header = () => {
                 backgroundClip: "text",
                 textShadow: "0 0 20px rgba(0, 255, 158, 0.3)",
                 filter: "drop-shadow(0 0 8px rgba(0, 255, 158, 0.5))",
+                animation: "heartbeat 3s ease-in-out infinite",
+                display: "inline-block",
               }}
             >
               DoDeal
