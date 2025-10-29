@@ -656,28 +656,30 @@ const Weather = () => {
                     return (
                       <div
                         key={index}
-                        className="flex items-center justify-between py-3 border-b border-primary-green/20 last:border-0"
+                        className="grid grid-cols-12 items-center gap-3 py-3 border-b border-primary-green/20 last:border-0"
                       >
-                        {/* Day Name - Left */}
-                        <p
-                          className="font-medium text-sm md:text-base"
-                          style={{ color: "rgba(203, 190, 187, 1)" }}
-                        >
-                          {day.day}
-                        </p>
-                        {/* Icon and Condition - Center */}
-                        <div className="flex items-center gap-2 flex-1 justify-center">
+                        {/* Day Name - Fixed Width Column */}
+                        <div className="col-span-3">
+                          <p
+                            className="font-medium text-sm md:text-base whitespace-nowrap"
+                            style={{ color: "rgba(203, 190, 187, 1)" }}
+                          >
+                            {day.day}
+                          </p>
+                        </div>
+                        {/* Icon and Condition - Fixed Position Column */}
+                        <div className="col-span-6 flex items-center gap-2 justify-start">
                           <img
                             src={day.icon}
                             alt={day.condition}
-                            className="w-6 h-6 md:w-8 md:h-8"
+                            className="w-6 h-6 md:w-8 md:h-8 flex-shrink-0"
                           />
-                          <p className="text-white text-xs md:text-sm">
+                          <p className="text-white text-xs md:text-sm capitalize">
                             {day.condition}
                           </p>
                         </div>
-                        {/* Temperature - Right */}
-                        <div className="text-sm md:text-base font-semibold">
+                        {/* Temperature - Right Aligned Fixed Column */}
+                        <div className="col-span-3 text-sm md:text-base font-semibold text-right">
                           <span className="text-white">{highTemp}</span>
                           <span className="text-white">/</span>
                           <span style={{ color: "rgba(203, 190, 187, 1)" }}>

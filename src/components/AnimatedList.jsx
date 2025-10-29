@@ -124,7 +124,7 @@ const AnimatedList = ({
     <div className={`scroll-list-container ${className}`}>
       <div
         ref={listRef}
-        className={`scroll-list ${!displayScrollbar ? "no-scrollbar" : ""}`}
+        className={`scroll-list no-scrollbar`}
         onScroll={handleScroll}
       >
         {items.map((item, index) => (
