@@ -482,3 +482,14 @@ body {
 .service-button-enter {
   animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s backwards;
 }
+
+/* Wheel Rotation Animation */
+.wheel-rotating {
+  will-change: transform;
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-wheel-item {
+  will-change: transform;
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
