@@ -66,7 +66,7 @@ const Services = () => {
       icon: DigitalMarketingIcon,
     },
     "Social Media": {
-      title: "Social Media Marketing",
+      title: "Social Media",
       subtitle: "Amplify Your Brand's Online Impact",
       description:
         "Transform Your Social Media Presence Into A Powerful Marketing Asset With Our Expert Solutions",
